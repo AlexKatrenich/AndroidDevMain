@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     private Button btnGoogleSignIn;
     private Button btnFacebookSignIn;
     private Button btnEmailSignIn;
+    private CheckBox cbSignUp;
 
 
     @Override
@@ -52,6 +54,9 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn = findViewById(R.id.btn_email_sign_in);
         btnEmailSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnEmailSignIn.setOnClickListener(this)");
+        cbSignUp = findViewById(R.id.cb_sign_up);
+        cbSignUp.setOnClickListener(this);
+        Log.d(TAG, "onCreate: cbSignUp.setOnClickListener(this)");
     }
 
 
@@ -70,6 +75,11 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Toast.makeText(this, "Sign-in with Google button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Google button was clicked!");
                 break;
+            case R.id.cb_sign_up :
+                /* кнопки підключення нового користувача мають міняти свій текст в залежності від
+                 * того чекбокс true або false, потрібно прописати в ресурсах тексти для кнопок та опрацювати
+                 * зміну тексту в залежності від кліку на чекбокс
+                 * */
             default:
                 break;
         }
@@ -81,7 +91,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setOnClickListener(null);
         btnFacebookSignIn.setOnClickListener(null);
         btnGoogleSignIn.setOnClickListener(null);
-
+        cbSignUp.setOnClickListener(null);
         super.onDestroy();
     }
 }
