@@ -59,15 +59,15 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_email_sign_in :
-                Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Email button was clicked!");
                 break;
             case R.id.btn_facebook_sign_in :
-                Toast.makeText(this, "Sign-in with Facebook  button was clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sign-in with Facebook  button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Facebook  button was clicked!");
                 break;
             case R.id.btn_google_sign_in :
-                Toast.makeText(this, "Sign-in with Google button was clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sign-in with Google button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Google button was clicked!");
                 break;
             default:
@@ -81,6 +81,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setOnClickListener(null);
         btnFacebookSignIn.setOnClickListener(null);
         btnGoogleSignIn.setOnClickListener(null);
+
         super.onDestroy();
     }
 }
