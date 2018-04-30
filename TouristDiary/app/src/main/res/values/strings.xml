@@ -4,4 +4,12 @@
     <string name="menu_action_about">About</string>
     <string name="menu_action_log_out">Log-out</string>
     <string name="menu_action_get_date">Get date</string>
+    <string name="app_cb_authority_with">Sign-up New User</string>
+    <string name="app_btn_email_sign_in">Sign-in with Email</string>
+    <string name="app_btn_email_sign_up">Sign-up with Email</string>
+    <string name="app_btn_facebook_sign_in">Sign-in with Facebook</string>
+    <string name="app_btn_facebook_sign_up">Sign-up with Facebook</string>
+    <string name="app_btn_google_sign_in">Sign-in with Google</string>
+    <string name="app_btn_google_sign_up">Sign-up with Google</string>
+
 </resources>

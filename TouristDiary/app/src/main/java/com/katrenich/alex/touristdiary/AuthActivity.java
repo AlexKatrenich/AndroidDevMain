@@ -48,15 +48,19 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 
         // ініціалізую кнопки та передаю їм прослуховувач кліку
         btnGoogleSignIn = findViewById(R.id.btn_google_sign_in);
+        btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
         btnGoogleSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnGoogleSignIn.setOnClickListener(this)");
         btnFacebookSignIn = findViewById(R.id.btn_facebook_sign_in);
+        btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_in));
         btnFacebookSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnFacebookSignIn.setOnClickListener(this)");
         btnEmailSignIn = findViewById(R.id.btn_email_sign_in);
+        btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));
         btnEmailSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnEmailSignIn.setOnClickListener(this)");
         cbSignUp = findViewById(R.id.cb_sign_up);
+        cbSignUp.setText(this.getString(R.string.app_cb_authority_with));
         cbSignUp.setOnClickListener(this);
         Log.d(TAG, "onCreate: cbSignUp.setOnClickListener(this)");
     }
@@ -78,7 +82,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Toast.makeText(this, "Menu item 'Settings' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_get_date :
-                
+                Toast.makeText(this, "Menu item 'Get Date' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -102,10 +106,15 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Log.d(TAG, "onClick: Sign-in with Google button was clicked!");
                 break;
             case R.id.cb_sign_up :
-                /* кнопки підключення нового користувача мають міняти свій текст в залежності від
-                 * того чекбокс true або false, потрібно прописати в ресурсах тексти для кнопок та опрацювати
-                 * зміну тексту в залежності від кліку на чекбокс
-                 * */
+                if(cbSignUp.isChecked()){
+                    btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_up));
+                    btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_up));
+                    btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_up));
+                } else {
+                    btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_in));
+                    btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
+                    btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));                }
+                break;
             default:
                 break;
         }
