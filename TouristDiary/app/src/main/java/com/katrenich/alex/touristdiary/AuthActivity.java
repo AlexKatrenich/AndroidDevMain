@@ -77,6 +77,9 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
             case R.id.action_settings :
                 Toast.makeText(this, "Menu item 'Settings' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.action_get_date :
+                
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
