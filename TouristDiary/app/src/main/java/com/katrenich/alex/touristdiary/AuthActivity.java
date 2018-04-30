@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -59,6 +61,27 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         Log.d(TAG, "onCreate: cbSignUp.setOnClickListener(this)");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return menu != null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Обробляю подію кліку на один з пунктів меню
+        switch (item.getItemId()){
+            case R.id.action_about :
+                Toast.makeText(this, "Menu item 'About' was clicked!", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_settings :
+                Toast.makeText(this, "Menu item 'Settings' was clicked!", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
     @Override
     public void onClick(View v) {
