@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="130dp"
-        tools:text="Sign-in with Google"
+        android:layout_marginTop="16dp"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:text="Sign-in with Google" />
 
     <Button
         android:id="@+id/btn_facebook_sign_in"
@@ -26,11 +27,12 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        tools:text="Sign-in with Facebook"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google_sign_in" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_google_sign_in"
+        tools:text="Sign-in with Facebook" />
 
     <Button
         android:id="@+id/btn_email_sign_in"
@@ -40,10 +42,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:textAllCaps="false"
-        tools:text="Sign-in with Email"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_facebook_sign_in" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_facebook_sign_in"
+        tools:text="Sign-in with Email" />
 
     <CheckBox
         android:id="@+id/cb_sign_up"
@@ -54,9 +57,23 @@
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="true"
-        tools:text="Sign-up New User"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_email_sign_in"
+        tools:text="Sign-up New User" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="122dp"
+        android:layout_height="118dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_email_sign_in" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/ic_earth_auth_activity" />
 
 </android.support.constraint.ConstraintLayout>

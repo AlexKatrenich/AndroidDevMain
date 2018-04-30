@@ -1,12 +1,12 @@
 package com.katrenich.alex.touristdiary;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,10 +50,11 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
             }
         };
 
-        getWindow().getDecorView().setBackground(ContextCompat
-                .getDrawable(this, R.drawable.ic_app_authority_background));
+        // встановлюю картинку на фон активності
+//        getWindow().getDecorView().setBackground(ContextCompat
+//                .getDrawable(this, R.drawable.ic_app_authority_background));
 
-        // ініціалізую кнопки та передаю їм прослуховувач кліку
+        // ініціалізую кнопки та передаю їм посилання на прослуховувач кліку
         btnGoogleSignIn = findViewById(R.id.btn_google_sign_in);
         btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
         btnGoogleSignIn.setOnClickListener(this);
@@ -78,7 +78,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         getMenuInflater().inflate(R.menu.menu, menu);
         return menu != null;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Обробляю подію кліку на один з пунктів меню
@@ -98,11 +98,9 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Toast.makeText(view.getContext(), String.format("Hours: %d, minutes: %d", hourOfDay, minute),
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 }, currentTime.getHours(), currentTime.getMinutes(), true);
                 timePickerDialog.show();
-
 
                 return true;
             default:
