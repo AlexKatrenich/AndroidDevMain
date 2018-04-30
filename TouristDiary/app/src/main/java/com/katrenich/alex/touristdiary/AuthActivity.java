@@ -1,18 +1,26 @@
 package com.katrenich.alex.touristdiary;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AuthActivity extends LogActivity implements View.OnClickListener{
 
@@ -70,7 +78,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         getMenuInflater().inflate(R.menu.menu, menu);
         return menu != null;
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Обробляю подію кліку на один з пунктів меню
@@ -82,7 +90,20 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Toast.makeText(this, "Menu item 'Settings' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_get_date :
-                Toast.makeText(this, "Menu item 'Get Date' was clicked!", Toast.LENGTH_LONG).show();
+                /* Даний пункт меню - тестовий, викликаємо діалог вибору часу
+                 * Використані застарілі методи, потрібно знайти та використати нові*/
+                final Date currentTime = Calendar.getInstance().getTime();
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Toast.makeText(view.getContext(), String.format("Hours: %d, minutes: %d", hourOfDay, minute),
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                }, currentTime.getHours(), currentTime.getMinutes(), true);
+                timePickerDialog.show();
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
