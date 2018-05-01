@@ -38,6 +38,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         holder.setData(trip);
     }
 
+    //метод відповідає за формування відповідної кількості Item в RecycleView
     @Override
     public int getItemCount() {
         return trips.size();
