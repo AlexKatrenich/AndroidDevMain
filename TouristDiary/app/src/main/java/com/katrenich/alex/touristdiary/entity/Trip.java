@@ -1,20 +1,23 @@
 package com.katrenich.alex.touristdiary.entity;
 
 
+import android.text.format.DateFormat;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 public class Trip {
     private String name;
     private Date dateOfBeginingTrip;
     private List<Date> dates;
     private List<String> notes;
-    private int photoId;
+    private String shortDescription; // відображення назви та дати початку подорожі в текстовому форматі
 
-    public Trip(String name, Date dateOfBeginingTrip, int photoId) {
+    public Trip(String name, Date dateOfBeginingTrip) {
         this.name = name;
         this.dateOfBeginingTrip = dateOfBeginingTrip;
-        this.photoId = photoId;
     }
 
     public String getName() {
@@ -49,11 +52,13 @@ public class Trip {
         this.notes = notes;
     }
 
-    public int getPhotoId() {
-        return photoId;
+    public String getShortDescription() {
+        shortDescription = new StringBuilder(name).
+                append(", ").
+                append(new SimpleDateFormat("dd MMM yyyy").format(dateOfBeginingTrip)).
+                toString();
+
+        return shortDescription;
     }
 
-    public void setPhotoId(int photoId) {
-        this.photoId = photoId;
-    }
 }
