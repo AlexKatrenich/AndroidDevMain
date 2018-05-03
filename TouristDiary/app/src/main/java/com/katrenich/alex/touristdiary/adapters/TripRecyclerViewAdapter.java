@@ -2,6 +2,7 @@ package com.katrenich.alex.touristdiary.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerViewAdapter.TripViewHolder> {
     private List<Trip> trips;
-    private OnItemClickListener onItemClickListener;
+    public static final String TAG = "TRVA_";
 
 
     public TripRecyclerViewAdapter(List<Trip> trips) {
@@ -42,18 +43,6 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
     public void onBindViewHolder(@NonNull TripViewHolder holder, final int position) {
         Trip trip = trips.get(position);
         holder.setData(trip);
-
-        holder.itemRecycleView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(onItemClickListener != null){
-//                    v.setBackgroundColor();
-                    Toast.makeText(v.getContext(),
-                            String.format("Element with position: %s was clicked!", position),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 
     //метод відповідає за формування відповідної кількості Item в RecycleView
@@ -62,7 +51,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         return trips.size();
     }
 
-    // вкладений клас
+    // вкладений клас що реалізує паттерн ViewHolder для ініціалізації View елемента, та наповнення його вмісту
     public static class TripViewHolder extends RecyclerView.ViewHolder{
         private TextView tvTripShortDescr;
         protected LinearLayout itemRecycleView;
@@ -78,13 +67,4 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         }
     }
 
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    //інтерфейс для відстеження кліку по елементу списку RecycleView
-    public interface OnItemClickListener {
-        public void onItemClick(int position);
-    }
 }
