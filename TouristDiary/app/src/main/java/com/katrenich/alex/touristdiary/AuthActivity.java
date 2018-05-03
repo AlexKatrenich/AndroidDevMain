@@ -1,11 +1,8 @@
 package com.katrenich.alex.touristdiary;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +33,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             FirebaseUser user;
@@ -54,7 +52,12 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 //        getWindow().getDecorView().setBackground(ContextCompat
 //                .getDrawable(this, R.drawable.ic_app_authority_background));
 
-        // ініціалізую кнопки та передаю їм посилання на прослуховувач кліку
+        init(); // ініціалізація елементів
+        Log.d(TAG, "onCreate: init()");
+    }
+
+    // ініціалізую кнопки та передаю їм посилання на прослуховувач кліку
+    private void init() {
         btnGoogleSignIn = findViewById(R.id.btn_google_sign_in);
         btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
         btnGoogleSignIn.setOnClickListener(this);
@@ -73,9 +76,11 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         Log.d(TAG, "onCreate: cbSignUp.setOnClickListener(this)");
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        Log.d(TAG, "onCreateOptionsMenu: getMenuInflater().inflate(R.menu.menu, menu)");
         return menu != null;
     }
 

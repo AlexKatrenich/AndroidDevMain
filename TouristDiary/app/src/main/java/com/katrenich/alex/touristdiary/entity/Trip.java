@@ -1,8 +1,6 @@
 package com.katrenich.alex.touristdiary.entity;
 
 
-import android.text.format.DateFormat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.katrenich.alex.touristdiary.entity;
 
-import com.katrenich.alex.touristdiary.R;
 
 import java.util.ArrayList;
 import java.util.Date;
