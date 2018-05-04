@@ -74,22 +74,37 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.auth_activity_menu, menu);
         Log.d(TAG, "onCreateOptionsMenu: getMenuInflater().inflate(R.menu.menu, menu)");
         return menu != null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_AUTH_EMAIL :
+                break;
+
+                default:
+                    break;
+
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Обробляю подію кліку на один з пунктів меню
         switch (item.getItemId()){
-            case R.id.action_about :
+            case R.id.menu_action_about :
                 Toast.makeText(this, "Menu item 'About' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.action_settings :
+            case R.id.menu_action_settings :
                 Toast.makeText(this, "Menu item 'Settings' was clicked!", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.action_get_date :
+            case R.id.menu_action_get_date :
                 /* Даний пункт меню - тестовий, викликаємо діалог вибору часу
                  * Використані застарілі методи, потрібно знайти та використати нові*/
                 final Date currentTime = Calendar.getInstance().getTime();
@@ -109,12 +124,14 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 
     }
 
+    private static final int REQUEST_CODE_AUTH_EMAIL = 825;
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_email_sign_in :
                 Intent intent = new Intent(this, EmailSignActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_AUTH_EMAIL);
                 Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Email button was clicked!");
                 break;

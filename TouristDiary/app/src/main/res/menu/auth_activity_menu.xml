@@ -2,23 +2,22 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AuthActivity">
+    tools:context=".AuthActivity"
+    >
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/menu_action_settings"
+        android:id="@+id/menu_action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never"
-        />
+        android:title="@string/menu_action_settings"
+        app:showAsAction="never" />
     <item
-        android:id="@+id/action_about"
+        android:id="@+id/menu_action_about"
         android:orderInCategory="200"
         android:title="About"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
-        android:id="@+id/action_get_date"
+        android:id="@+id/menu_action_get_date"
         android:orderInCategory="300"
         android:title="Get Date"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 </menu>
