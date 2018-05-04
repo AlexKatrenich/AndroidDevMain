@@ -1,13 +1,12 @@
 package com.katrenich.alex.touristdiary;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.support.v7.app.ActionBar;
 
 public class EmailSignActivity extends LogActivity implements View.OnClickListener {
 
@@ -37,7 +36,7 @@ public class EmailSignActivity extends LogActivity implements View.OnClickListen
         Log.d(TAG, "init: tvEmail = findViewById(R.id.tv_email_auth_login)");
         tvPassword = findViewById(R.id.tv_email_auth_pasword);
         Log.d(TAG, "init: tvPassword = findViewById(R.id.tv_email_auth_password)");
-        actionBar = this.getActionBar();
+        actionBar = this.getSupportActionBar();
         Log.d(TAG, String.valueOf("init: actionBar = getActionBar()"));
         if(actionBar != null){
             actionBar.setHomeButtonEnabled(true);
