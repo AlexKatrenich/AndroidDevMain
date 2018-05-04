@@ -1,6 +1,7 @@
 package com.katrenich.alex.touristdiary;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,7 +26,6 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     private Button btnGoogleSignIn;
     private Button btnFacebookSignIn;
     private Button btnEmailSignIn;
-    private CheckBox cbSignUp;
 
 
     @Override
@@ -70,10 +69,6 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));
         btnEmailSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnEmailSignIn.setOnClickListener(this)");
-        cbSignUp = findViewById(R.id.cb_sign_up);
-        cbSignUp.setText(this.getString(R.string.app_cb_authority_with));
-        cbSignUp.setOnClickListener(this);
-        Log.d(TAG, "onCreate: cbSignUp.setOnClickListener(this)");
     }
 
 
@@ -118,6 +113,8 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_email_sign_in :
+                Intent intent = new Intent(this, EmailSignActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Email button was clicked!");
                 break;
@@ -129,19 +126,11 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Toast.makeText(this, "Sign-in with Google button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Google button was clicked!");
                 break;
-            case R.id.cb_sign_up :
-                if(cbSignUp.isChecked()){
-                    btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_up));
-                    btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_up));
-                    btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_up));
-                } else {
-                    btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_in));
-                    btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
-                    btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));                }
-                break;
             default:
                 break;
         }
+
+
     }
 
     @Override
@@ -150,7 +139,6 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setOnClickListener(null);
         btnFacebookSignIn.setOnClickListener(null);
         btnGoogleSignIn.setOnClickListener(null);
-        cbSignUp.setOnClickListener(null);
         super.onDestroy();
     }
 }
