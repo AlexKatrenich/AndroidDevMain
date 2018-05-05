@@ -1,8 +1,7 @@
-package com.katrenich.alex.touristdiary;
+package com.katrenich.alex.touristdiary.auth;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +13,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katrenich.alex.touristdiary.LogActivity;
+import com.katrenich.alex.touristdiary.MainActivity;
+import com.katrenich.alex.touristdiary.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,24 +35,6 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            FirebaseUser user;
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    Log.d(TAG, "onAuthStateChanged: signed_in: " + user.getUid());
-                } else {
-                    Log.d(TAG, "onAuthStateChanged: signed_out ");
-                }
-            }
-        };
-
-        // встановлюю картинку на фон активності
-//        getWindow().getDecorView().setBackground(ContextCompat
-//                .getDrawable(this, R.drawable.ic_app_authority_background));
-
         init(); // ініціалізація елементів
         Log.d(TAG, "onCreate: init()");
     }
@@ -69,8 +53,33 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));
         btnEmailSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnEmailSignIn.setOnClickListener(this)");
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        update(currentUser);
+
+    }
+
+    // update program interface while user is
+    private void update(FirebaseUser currentUser) {
+        if(currentUser != null){
+            Log.d(TAG, "update: currentUser != null");
+            Log.d(TAG, "update: UserId" + currentUser.getUid());
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
+        Log.d(TAG, "update: currentUser == null");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

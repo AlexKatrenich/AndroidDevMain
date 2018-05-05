@@ -13,4 +13,5 @@
     <string name="app_btn_google_sign_up">Sign-up with Google</string>
     <string name="ic_earth_auth_activity_content_description">Logo of Earth</string>
     <string name="im_trip_background">Background of trip</string>
+    <string name="loading">Loading...</string>
 </resources>
