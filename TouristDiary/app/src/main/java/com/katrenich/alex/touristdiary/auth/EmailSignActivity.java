@@ -1,6 +1,7 @@
 package com.katrenich.alex.touristdiary.auth;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -8,8 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.support.v7.app.ActionBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.katrenich.alex.touristdiary.R;
 
 import java.util.regex.Pattern;
@@ -83,7 +89,7 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.btn_email_auth_sign_in :
                 Log.d(TAG, "onClick: case R.id.btn_email_auth_sign_in");
-
+                signIn(tvEmail.getText().toString(), tvPassword.getText().toString());
                 break;
             case R.id.btn_email_auth_sign_up :
                 Log.d(TAG, "onClick: ase R.id.btn_email_auth_sign_up ");
@@ -95,6 +101,10 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void signIn(String email, String password) {
+        
+    }
+
     // метод для створення акаунту користувача
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount: email");
@@ -104,10 +114,34 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
             return;
         }
 
+
         showProgressDialog();
         Log.d(TAG, "createAccount: showProgressDialog");
 
+        // [START create_user_with_email]
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //TODO
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(EmailSignActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //TODO
+                        }
 
+                        // [START_EXCLUDE]
+                        hideProgressDialog();
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END create_user_with_email]
     }
 
 
@@ -123,6 +157,7 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
 
             // валідація корректного вводу емейла за допомогою регулярного виразу
             valid = Pattern.compile(EMAIL_PATTERN).matcher(email).matches();
+            Log.d(TAG, "validateForm: email - "+ valid);
         }
 
 
@@ -133,11 +168,12 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
             valid = false;
         } else {
             tvPassword.setError(null);
-            
+
             //валідація корректного вводу пароля за допомогою регулярного виразу
             valid = Pattern.compile(PASSWORD_PATTERN).matcher(password).matches();
             Log.d(TAG, "validateForm: password - "+ valid);
         }
+
 
         return valid;
     }
@@ -149,7 +185,6 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
                 onBackPressed();
                 Log.d(TAG, "onOptionsItemSelected: onBackPressed()");
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
 
