@@ -102,7 +102,39 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void signIn(String email, String password) {
-        
+        Log.d(TAG, "signIn: email");
+
+        // перевіряємо коректність заповнення полів форми
+        if(!validateForm()){
+            return;
+        }
+
+        showProgressDialog();
+
+        // [START sign_in_with_email]
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //TODO
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(EmailSignActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //TODO
+                        }
+
+                        hideProgressDialog();
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END sign_in_with_email]
+
     }
 
     // метод для створення акаунту користувача
