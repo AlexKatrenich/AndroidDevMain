@@ -1,5 +1,6 @@
 package com.katrenich.alex.touristdiary.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.katrenich.alex.touristdiary.MainActivity;
 import com.katrenich.alex.touristdiary.R;
 
 import java.util.regex.Pattern;
@@ -120,13 +122,12 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //TODO
+                            startActivity(new Intent(EmailSignActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(EmailSignActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //TODO
                         }
 
                         hideProgressDialog();
@@ -159,13 +160,13 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //TODO
+                            // викликаю головну Activity
+                            startActivity(new Intent(EmailSignActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(EmailSignActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //TODO
                         }
 
                         // [START_EXCLUDE]

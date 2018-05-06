@@ -9,15 +9,25 @@
         android:id="@+id/menu_action_settings"
         android:orderInCategory="100"
         android:title="@string/menu_action_settings"
+        android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_action_about"
         android:orderInCategory="200"
-        android:title="About"
+        android:title="@string/menu_action_about"
+        android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_action_get_date"
         android:orderInCategory="300"
-        android:title="Get Date"
+        android:title="@string/menu_action_get_date"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_action_log_out"
+        android:orderInCategory="400"
+        android:title="@string/menu_action_log_out"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>

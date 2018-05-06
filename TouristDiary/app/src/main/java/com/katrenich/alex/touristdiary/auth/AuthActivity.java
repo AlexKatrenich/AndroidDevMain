@@ -85,8 +85,15 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.auth_activity_menu, menu);
         Log.d(TAG, "onCreateOptionsMenu: getMenuInflater().inflate(R.menu.menu, menu)");
+        MenuItem menuItem = menu.findItem(R.id.menu_action_about); // пункт про програму
+        menuItem.setVisible(true);
+        menuItem = menu.findItem(R.id.menu_action_settings);
+        menuItem.setVisible(true);
+        menuItem = menu.findItem(R.id.menu_action_get_date);
+        menuItem.setVisible(true);
         return menu != null;
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
