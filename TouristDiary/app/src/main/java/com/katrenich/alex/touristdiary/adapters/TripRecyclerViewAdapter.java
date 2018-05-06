@@ -54,12 +54,10 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
     // вкладений клас що реалізує паттерн ViewHolder для ініціалізації View елемента, та наповнення його вмісту
     public static class TripViewHolder extends RecyclerView.ViewHolder{
         private TextView tvTripShortDescr;
-        protected LinearLayout itemRecycleView;
 
         public TripViewHolder(View itemView) {
             super(itemView);
             tvTripShortDescr = itemView.findViewById(R.id.tv_trip_short_description);
-            itemRecycleView = itemView.findViewById(R.id.ll_item_trip);
         }
 
         public void setData(Trip trip) {

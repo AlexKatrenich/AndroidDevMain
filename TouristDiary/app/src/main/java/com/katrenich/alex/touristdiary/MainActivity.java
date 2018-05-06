@@ -35,10 +35,22 @@ public class MainActivity extends LogActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null){
+            startActivity(new Intent(this, AuthActivity.class));
+            finish();
+        }
+    }
+
     private void init() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
+            startActivity(new Intent(this, AuthActivity.class));
             finish();
         }
 
