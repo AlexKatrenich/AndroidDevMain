@@ -23,7 +23,7 @@
         tools:text="Sign-in with Google" />
 
     <Button
-        android:id="@+id/btn_facebook_sign_in"
+        android:id="@+id/btn_facebook_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_facebook_sign_in"
+        app:layout_constraintTop_toBottomOf="@+id/btn_facebook_login"
         tools:text="Sign-in with Email" />
 
     <ImageView

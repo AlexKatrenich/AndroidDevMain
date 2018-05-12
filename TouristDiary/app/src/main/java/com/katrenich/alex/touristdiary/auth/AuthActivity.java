@@ -24,7 +24,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth; // змінна для роботи з авторизацією
     private FirebaseAuth.AuthStateListener mAuthListener; // змінна для прослуховування зміни статусу користувача
-
+    
     private Button btnGoogleSignIn;
     private Button btnFacebookSignIn;
     private Button btnEmailSignIn;
@@ -45,7 +45,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnGoogleSignIn.setText(this.getResources().getText(R.string.app_btn_google_sign_in));
         btnGoogleSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnGoogleSignIn.setOnClickListener(this)");
-        btnFacebookSignIn = findViewById(R.id.btn_facebook_sign_in);
+        btnFacebookSignIn = findViewById(R.id.btn_facebook_login);
         btnFacebookSignIn.setText(this.getResources().getText(R.string.app_btn_facebook_sign_in));
         btnFacebookSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnFacebookSignIn.setOnClickListener(this)");
@@ -141,6 +141,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     }
 
     private static final int REQUEST_CODE_AUTH_EMAIL = 825;
+    private static final int REQUEST_CODE_AUTH_FACEBOOK = 356;
     
     @Override
     public void onClick(View v) {
@@ -151,8 +152,8 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Email button was clicked!");
                 break;
-            case R.id.btn_facebook_sign_in :
-                Toast.makeText(this, "Sign-in with Facebook  button was clicked!", Toast.LENGTH_LONG).show();
+            case R.id.btn_facebook_login:
+                startActivityForResult(new Intent(this, FacebookAuthActivity.class), REQUEST_CODE_AUTH_FACEBOOK);
                 Log.d(TAG, "onClick: Sign-in with Facebook  button was clicked!");
                 break;
             case R.id.btn_google_sign_in :

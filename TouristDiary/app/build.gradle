@@ -36,6 +36,6 @@ dependencies {
 
     // Facebook Android SDK (only required for Facebook Login)
     // Used in FacebookLoginActivity.
-    implementation 'com.facebook.android:facebook-login:4.32.0'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
     implementation 'com.android.support:customtabs:27.1.1'
 }
