@@ -1,8 +1,10 @@
 package com.katrenich.alex.touristdiary.auth;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -169,7 +171,16 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         // Обробляю подію кліку на один з пунктів меню
         switch (item.getItemId()){
             case R.id.menu_action_about :
-                Toast.makeText(this, "Menu item 'About' was clicked!", Toast.LENGTH_LONG).show();
+                AlertDialog alertDialog = new AlertDialog.Builder(AuthActivity.this).create();
+                alertDialog.setTitle("About");
+                alertDialog.setMessage("Created by Alex Katrenich");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

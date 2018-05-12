@@ -1,8 +1,10 @@
 package com.katrenich.alex.touristdiary;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -89,17 +91,8 @@ public class MainActivity extends LogActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.auth_activity_menu, menu);
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         Log.d(TAG, "onCreateOptionsMenu: getMenuInflater().inflate(R.menu.menu, menu)");
-        MenuItem menuItem = menu.findItem(R.id.menu_action_about);
-        menuItem.setVisible(true);
-        Log.d(TAG, "onCreateOptionsMenu: MenuItem menuItem = menu.findItem(R.id.menu_action_about)");
-        menuItem = menu.findItem(R.id.menu_action_settings);
-        menuItem.setVisible(true);
-        Log.d(TAG, "onCreateOptionsMenu: menuItem = menu.findItem(R.id.menu_action_settings)");
-        menuItem = menu.findItem(R.id.menu_action_log_out);
-        menuItem.setVisible(true);
-        Log.d(TAG, "onCreateOptionsMenu: menuItem = menu.findItem(R.id.menu_action_log_out)");
         return menu != null;
     }
 
@@ -109,9 +102,23 @@ public class MainActivity extends LogActivity {
             case R.id.menu_action_log_out :
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, AuthActivity.class));
-
+                finish();
+                return true;
+            case R.id.menu_action_about :
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("About");
+                alertDialog.setMessage("Created by Alex Katrenich");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Log.d(TAG, "onClick: dialog.dismiss()");
+                            }
+                        });
+                alertDialog.show();
+                return true;
             default :
-                return false;
+                return super.onOptionsItemSelected(item);
         }
     }
 
