@@ -3,7 +3,10 @@ package com.katrenich.alex.touristdiary.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +23,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.katrenich.alex.touristdiary.MainActivity;
 import com.katrenich.alex.touristdiary.R;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 public class EmailSignActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String EMAIL_PASSWORD_USER = "user";
     private Button btnSignIn;
     private Button btnSignUp;
     private TextView tvEmail;
@@ -121,7 +126,10 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(EmailSignActivity.this, MainActivity.class));
+                            Intent intent = new Intent(EmailSignActivity.this, AuthActivity.class);
+                            intent.putExtra(EMAIL_PASSWORD_USER, (Serializable) user);
+                            setResult(RESULT_OK, intent);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -179,7 +187,6 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
 
     private boolean validateForm() {
         boolean valid = true;
-
         String email = tvEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
             tvEmail.setError("Required.");
@@ -192,7 +199,12 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
             Log.d(TAG, "validateForm: email - "+ valid);
         }
 
-
+        if(valid == false){
+            SpannableString sString = new SpannableString(email);
+            sString.setSpan(new UnderlineSpan(), 0, sString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvEmail.setText(sString);
+            return valid;
+        }
 
         String password = tvPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
@@ -203,9 +215,15 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
 
             //валідація корректного вводу пароля за допомогою регулярного виразу
             valid = Pattern.compile(PASSWORD_PATTERN).matcher(password).matches();
-            Log.d(TAG, "validateForm: password - "+ valid);
+            Log.d(TAG, "validateForm: password - " + valid);
         }
 
+        if(valid == false){
+            SpannableString sString = new SpannableString(password);
+            sString.setSpan(new UnderlineSpan(), 0, sString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvPassword.setText(sString);
+            return valid;
+        }
 
         return valid;
     }
@@ -214,8 +232,9 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home :
-                onBackPressed();
-                Log.d(TAG, "onOptionsItemSelected: onBackPressed()");
+                setResult(RESULT_CANCELED);
+                Log.d(TAG, "onOptionsItemSelected: setResult(RESULT_CANCELED)");
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

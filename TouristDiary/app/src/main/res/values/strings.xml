@@ -18,5 +18,6 @@
     <string name="hint_password">Password</string>
     <string name="facebook_app_id">572110336494763</string>
     <string name="fb_login_protocol_scheme">fb572110336494763</string>
+    <string name="auth_activity_title_name">Tourist Diary</string>
 
 </resources>

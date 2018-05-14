@@ -11,6 +11,7 @@ public class User {
     private long firebaseID;
 
     public User() {
+
     }
 
     public User(String login, String email, long firebaseID) {

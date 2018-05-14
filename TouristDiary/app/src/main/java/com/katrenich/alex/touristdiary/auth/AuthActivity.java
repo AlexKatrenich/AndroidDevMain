@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
@@ -23,7 +24,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,16 +32,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.katrenich.alex.touristdiary.LogActivity;
 import com.katrenich.alex.touristdiary.MainActivity;
 import com.katrenich.alex.touristdiary.R;
+import com.katrenich.alex.touristdiary.entity.User;
 
 import java.util.Arrays;
 
 
 public class AuthActivity extends LogActivity implements View.OnClickListener{
 
-    private static final int RC_SIGN_IN = 2;
+    private static final int RC_AUTH_EMAIL = 825;
+    private static final int RC_GOOGLE_SIGN_IN = 2;
     private FirebaseAuth mAuth; // змінна для роботи з авторизацією
     private FirebaseAuth.AuthStateListener mAuthListener; // змінна для прослуховування зміни статусу користувача
     private CallbackManager mCallbackManager; //менеджер управління зв'язоком сервісу фейсбук та додатку
@@ -76,6 +79,13 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         btnEmailSignIn.setText(this.getResources().getText(R.string.app_btn_email_sign_in));
         btnEmailSignIn.setOnClickListener(this);
         Log.d(TAG, "onCreate: btnEmailSignIn.setOnClickListener(this)");
+
+        // [START initialize ActionBar]
+        ActionBar actionBar = this.getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle(R.string.auth_activity_title_name);
+        }
+        // [END initialize ActionBar]
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -128,12 +138,19 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth != null){
+                    updateUI(firebaseAuth.getCurrentUser());
+                }
+            }
+        };
     }
 
-    private void signIn() {
+    private void signInWithGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
 
     // метод для отримання ключа для авторизації з фейсбук
@@ -144,10 +161,10 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Sign in success, updateUI UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            update(user);
+                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -167,20 +184,21 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        update(currentUser);
+        updateUI(currentUser);
 
     }
 
-    // update program interface while user is
-    private void update(FirebaseUser currentUser) {
+    // updateUI program interface while user is
+    private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null){
-            Log.d(TAG, "update: currentUser != null");
-            Log.d(TAG, "update: UserId" + currentUser.getUid());
+            Log.d(TAG, "updateUI: currentUser != null");
+            Log.d(TAG, "updateUI: UserId" + currentUser.getUid());
+            User user = new User();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
 
-        Log.d(TAG, "update: currentUser == null");
+        Log.d(TAG, "updateUI: currentUser == null");
     }
 
     @Override
@@ -198,9 +216,13 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
-            case REQUEST_CODE_AUTH_EMAIL :
+            case RC_AUTH_EMAIL:
+                if(requestCode == RESULT_OK){
+                    FirebaseUser currentuser = (FirebaseUser) data.getSerializableExtra(EmailSignActivity.EMAIL_PASSWORD_USER);
+                    updateUI(currentuser);
+                }
                 break;
-            case RC_SIGN_IN :
+            case RC_GOOGLE_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 if(result.isSuccess()){
@@ -221,7 +243,23 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            // Sign-in success
+                            Log.d(TAG, "onComplete: sign-in complete successful");
+                            updateUI(mAuth.getCurrentUser());
+                        } else {
+                            // Sign-in failed
+                            Log.d(TAG, "onComplete: Sign-in failed");
+                            Toast.makeText(AuthActivity.this, "Authentification failed", Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -246,16 +284,13 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
 
     }
 
-
-    private static final int REQUEST_CODE_AUTH_EMAIL = 825;
     
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_email_sign_in :
                 Intent intent = new Intent(this, EmailSignActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_AUTH_EMAIL);
-                Toast.makeText(this, "Sign-in with Email button was clicked!", Toast.LENGTH_LONG).show();
+                startActivityForResult(intent, RC_AUTH_EMAIL);
                 Log.d(TAG, "onClick: Sign-in with Email button was clicked!");
                 break;
             case R.id.btn_facebook_login:
@@ -264,8 +299,8 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 Log.d(TAG, "onClick: Sign-in with Facebook  button was clicked!");
                 break;
             case R.id.btn_google_sign_in :
-                Toast.makeText(this, "Sign-in with Google button was clicked!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onClick: Sign-in with Google button was clicked!");
+                signInWithGoogle();
                 break;
             default:
                 break;
