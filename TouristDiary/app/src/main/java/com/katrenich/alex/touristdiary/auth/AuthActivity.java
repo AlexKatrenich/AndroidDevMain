@@ -18,6 +18,13 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -34,10 +41,12 @@ import java.util.Arrays;
 
 public class AuthActivity extends LogActivity implements View.OnClickListener{
 
+    private static final int RC_SIGN_IN = 2;
     private FirebaseAuth mAuth; // змінна для роботи з авторизацією
     private FirebaseAuth.AuthStateListener mAuthListener; // змінна для прослуховування зміни статусу користувача
     private CallbackManager mCallbackManager; //менеджер управління зв'язоком сервісу фейсбук та додатку
     private FacebookCallback<LoginResult> facebookCallback;
+    private GoogleApiClient mGoogleApiClient;
 
     private Button btnGoogleSignIn;
     private Button btnFacebookSignIn;
@@ -73,8 +82,10 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         // [END initialize_auth]
 
         // create instance of CallbackManager
-        mCallbackManager = CallbackManager.Factory.create();
 
+        // [START initialize facebook auth]
+        mCallbackManager = CallbackManager.Factory.create();
+        Log.d(TAG, "init: Instance CallbackManager create");
         facebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -94,8 +105,38 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
                 // ...
             }
         };
+        Log.d(TAG, "init: FacebookCallback - success");
+        // [END initialize facebook auth]
+
+        // [START initialize google auth]
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        Log.d(TAG, "init: GoogleSignInOptions - success");
+        // [END config_signin]
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Log.d(TAG, "onConnectionFailed: " + connectionResult.getErrorMessage());
+                        Toast.makeText(AuthActivity.this, "Connection failed", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+
     }
 
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    // метод для отримання ключа для авторизації з фейсбук
     private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
@@ -159,11 +200,28 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         switch (requestCode){
             case REQUEST_CODE_AUTH_EMAIL :
                 break;
+            case RC_SIGN_IN :
+                // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if(result.isSuccess()){
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    // Google sign-in was successful, authenticate with firebase
+                    Log.d(TAG, "onActivityResult: google sign-in successful");
+                    firebaseAuthWithGoogle(account);
+                } else {
+                    // Google sign-in failed
+                    Log.d(TAG, "onActivityResult: Google sign-in failed" );
+                }
+                break;
 
-                default:
-                    break;
+            default:
+                break;
 
         }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+
     }
 
     @Override
@@ -187,6 +245,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         }
 
     }
+
 
     private static final int REQUEST_CODE_AUTH_EMAIL = 825;
     

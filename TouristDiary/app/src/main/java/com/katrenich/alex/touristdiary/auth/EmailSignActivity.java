@@ -51,7 +51,6 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     private void init() {
