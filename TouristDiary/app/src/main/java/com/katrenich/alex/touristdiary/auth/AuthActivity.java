@@ -192,8 +192,18 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null){
             Log.d(TAG, "updateUI: currentUser != null");
-            Log.d(TAG, "updateUI: UserId" + currentUser.getUid());
-            User user = new User();
+
+            // [CREATE LOCAL INSTANCE OF USER]
+            User user = new User.Builder()
+                    .setEmail(currentUser.getEmail())
+                    .setFirebaseId(currentUser.getProviderId())
+                    .setLogin(currentUser.getEmail().split("\n")[0])
+                    .buildUser();
+            Log.d(TAG, "updateUI: User" + user);
+
+            // [WRITE LOCAL USER INTO SQLite(in )]
+
+
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
