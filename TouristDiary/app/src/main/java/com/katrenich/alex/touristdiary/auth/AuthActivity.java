@@ -33,6 +33,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.gson.Gson;
 import com.katrenich.alex.touristdiary.LogActivity;
 import com.katrenich.alex.touristdiary.MainActivity;
 import com.katrenich.alex.touristdiary.R;
@@ -228,7 +229,8 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
         switch (requestCode){
             case RC_AUTH_EMAIL:
                 if(requestCode == RESULT_OK){
-                    FirebaseUser currentuser = (FirebaseUser) data.getSerializableExtra(EmailSignActivity.EMAIL_PASSWORD_USER);
+                    Gson gson = new Gson();
+                    FirebaseUser currentuser = gson.fromJson(getIntent().getStringExtra(EmailSignActivity.EMAIL_PASSWORD_USER), FirebaseUser.class);
                     updateUI(currentuser);
                 }
                 break;

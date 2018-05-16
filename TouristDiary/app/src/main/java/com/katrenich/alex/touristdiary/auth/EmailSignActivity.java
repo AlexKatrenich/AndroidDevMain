@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.katrenich.alex.touristdiary.MainActivity;
 import com.katrenich.alex.touristdiary.R;
 
@@ -127,7 +128,9 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(EmailSignActivity.this, AuthActivity.class);
-                            intent.putExtra(EMAIL_PASSWORD_USER, (Serializable) user);
+                            Gson gson = new Gson();
+                            String myJson = gson.toJson(user);
+                            intent.putExtra(EMAIL_PASSWORD_USER, myJson);
                             setResult(RESULT_OK, intent);
                             finish();
                         } else {
