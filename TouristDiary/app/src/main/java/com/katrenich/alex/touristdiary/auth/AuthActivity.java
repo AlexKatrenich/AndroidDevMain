@@ -197,7 +197,7 @@ public class AuthActivity extends LogActivity implements View.OnClickListener{
             User user = new User.Builder()
                     .setEmail(currentUser.getEmail())
                     .setFirebaseId(currentUser.getProviderId())
-                    .setLogin(currentUser.getEmail().split("\n")[0])
+                    .setLogin(currentUser.getEmail())
                     .buildUser();
             Log.d(TAG, "updateUI: User" + user);
 

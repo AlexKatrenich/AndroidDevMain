@@ -49,11 +49,11 @@ public class TripRecyclerItemClickListener implements RecyclerView.OnItemTouchLi
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
+        //NOPE
     }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
+        //TODO
     }
 }
