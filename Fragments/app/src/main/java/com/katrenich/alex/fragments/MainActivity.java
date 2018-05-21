@@ -46,10 +46,13 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "One", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.item_map :
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fl_container_fragment, new MyFragmentTwo())
+                                .addToBackStack(null)
+                                .commit();
+
                         Toast.makeText(MainActivity.this, "Two", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.item_text :
-                        Toast.makeText(MainActivity.this, "Tree", Toast.LENGTH_SHORT).show();
                         return true;
                     default:
                         return false;
