@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,11 +23,12 @@ import com.katrenich.alex.touristdiary.entity.TripDataSource;
 
 import java.util.List;
 
-public class MainActivity extends LogActivity {
+public class MainActivity extends LogActivity implements View.OnClickListener{
 
     private TripRecyclerItemClickListener tripRecyclerItemClickListener;
     private RecyclerView rvListTrip;
-    FirebaseAuth mAuth;
+    private FloatingActionButton btnCreateNewTrip;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,24 +70,28 @@ public class MainActivity extends LogActivity {
             }
         });
 
-
-
         tripRecyclerItemClickListener = new TripRecyclerItemClickListener(this,
                 rvListTrip,
                 new TripRecyclerItemClickListener.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        // в методі опрацьовується клік по елементу RecycleView
                         Toast.makeText(MainActivity.this, "ClickOnItem.... UuuuuHuuu", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onLongItemClick(View view, int position) {
+                        // в методі опрацьовується довгий клік по елементу RecycleView
                         Toast.makeText(MainActivity.this, "LongClickOnItem..... YeeeAaaaap", Toast.LENGTH_SHORT).show();
                     }
                 });
 
         rvListTrip.addOnItemTouchListener(tripRecyclerItemClickListener);
+        Log.d(TAG, "init: rvListTrip.addOnItemTouchListener(tripRecyclerItemClickListener)");
 
+        btnCreateNewTrip = findViewById(R.id.btn_new_trip);
+        btnCreateNewTrip.setOnClickListener(this);
+        Log.d(TAG, "init: btnCreateNewTrip.setOnClickListener(this)");
     }
 
 
@@ -126,5 +132,10 @@ public class MainActivity extends LogActivity {
     protected void onDestroy() {
         rvListTrip.removeOnItemTouchListener(tripRecyclerItemClickListener);
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        
     }
 }
