@@ -136,6 +136,13 @@ public class MainActivity extends LogActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        
+        switch (v.getId()){
+            case R.id.btn_new_trip :
+                //TODO
+                Toast.makeText(this, "Create new Trip", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
     }
 }
