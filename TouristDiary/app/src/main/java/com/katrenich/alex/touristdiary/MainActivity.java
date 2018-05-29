@@ -2,7 +2,6 @@ package com.katrenich.alex.touristdiary;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -134,11 +133,13 @@ public class MainActivity extends LogActivity implements View.OnClickListener{
         super.onDestroy();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_new_trip :
                 //TODO
+                startActivity(new Intent(this, TripActivity.class));
                 Toast.makeText(this, "Create new Trip", Toast.LENGTH_LONG).show();
                 break;
             default:

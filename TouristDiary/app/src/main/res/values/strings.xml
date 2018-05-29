@@ -19,5 +19,9 @@
     <string name="facebook_app_id">572110336494763</string>
     <string name="fb_login_protocol_scheme">fb572110336494763</string>
     <string name="auth_activity_title_name">Tourist Diary</string>
+    <string name="bnm_main">main</string>
+    <string name="bnm_map">map</string>
+    <string name="bnm_notes">notes</string>
+    <string name="bnm_photos">photos</string>
 
 </resources>

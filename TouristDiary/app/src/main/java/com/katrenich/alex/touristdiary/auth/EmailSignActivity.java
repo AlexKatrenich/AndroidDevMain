@@ -27,6 +27,7 @@ import com.katrenich.alex.touristdiary.R;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+
 public class EmailSignActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EMAIL_PASSWORD_USER = "user";
@@ -254,4 +255,5 @@ public class EmailSignActivity extends BaseActivity implements View.OnClickListe
         Log.d(TAG, "onDestroy: btnSignIn.setOnClickListener(null)");
         super.onDestroy();
     }
+
 }
