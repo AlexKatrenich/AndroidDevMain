@@ -75,13 +75,13 @@ public class MainActivity extends LogActivity implements View.OnClickListener{
                     @Override
                     public void onItemClick(View view, int position) {
                         // в методі опрацьовується клік по елементу RecycleView
-                        Toast.makeText(MainActivity.this, "ClickOnItem.... UuuuuHuuu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "ClickOnItem", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onLongItemClick(View view, int position) {
                         // в методі опрацьовується довгий клік по елементу RecycleView
-                        Toast.makeText(MainActivity.this, "LongClickOnItem..... YeeeAaaaap", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "LongClickOnItem", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -112,7 +112,7 @@ public class MainActivity extends LogActivity implements View.OnClickListener{
             case R.id.menu_action_about :
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle("About");
-                alertDialog.setMessage("Created by Alex Katrenich");
+                alertDialog.setMessage("Made in China");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

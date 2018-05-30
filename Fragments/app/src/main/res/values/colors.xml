@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBackgroundTripMainFragment">#FF6161</color>
+    <color name="colorBackgroundTripMapFragment">#F12311</color>
+    <color name="colorBackgroundTripNotesFragment">#116161</color>
+    <color name="colorBackgroundTripPhotosFragment">#211111</color>
+
 </resources>
