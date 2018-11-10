@@ -1,11 +1,15 @@
 package com.katrenich.alex.customdialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.madrapps.pikolo.HSLColorPicker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: customDialogFragment");
             }
         });
+
+        findViewById(R.id.btn_pikolo_show).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: BTN_PIKOLO");
+                AlertDialog.Builder adBuilder = new AlertDialog.Builder(v.getContext());
+                adBuilder.setView(new HSLColorPicker(v.getContext()));
+                adBuilder.create();
+                adBuilder.show();
+            }
+        });
+
     }
 
 

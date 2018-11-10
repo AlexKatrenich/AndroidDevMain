@@ -48,6 +48,7 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
             case R.id.btn_ok :
                 String s = editText.getText().toString();
                 Toast.makeText(v.getContext(), s != null ? s : " ", Toast.LENGTH_SHORT).show();
+                dismiss();
                 break;
             case R.id.btn_cancel :
                 dismiss();
