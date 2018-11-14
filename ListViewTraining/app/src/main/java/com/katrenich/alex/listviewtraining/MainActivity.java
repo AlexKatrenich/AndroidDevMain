@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.lv_alphabetic_list);
         List<Character> alphabet = getAllphabet();
 
-        ListAdapter adapter = new ArrayAdapter<Character>(this,
-                android.R.layout.simple_list_item_1,
+        ListAdapter adapter = new ArrayAdapter<>(this,
+                R.layout.item_single_selected,
                 alphabet);
 
         listView.setAdapter(adapter);
@@ -41,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 //        listView.getCheckedItemPosition();
 
     }
-
-
 
 
     private List<Character> getAllphabet(){
